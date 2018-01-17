@@ -16,8 +16,18 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
-})
+}, {
+  getterMethods: {
+    phoneInt() {
+      return +this.phone.str.replace(/-/g, "")
+    }
+  }
+});
 
 module.exports = User
 
