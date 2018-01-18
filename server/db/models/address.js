@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-var Address = db.define('article', {
+var Address = db.define('address', {
     street: {
         type: Sequelize.STRING,
         allowNull: false

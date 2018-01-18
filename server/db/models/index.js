@@ -1,7 +1,10 @@
 const User = require('./user');
 const Address = require('./address');
+const CheersRequest = require('./cheersRequest');
 
 Address.belongsTo(User);
+User.hasOne(Address);
+
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -11,5 +14,6 @@ Address.belongsTo(User);
  */
 module.exports = {
   User,
-  Address
+  Address,
+  CheersRequest
 }

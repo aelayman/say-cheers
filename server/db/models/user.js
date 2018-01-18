@@ -19,12 +19,12 @@ const User = db.define('user', {
   },
   phone: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   }
 }, {
   getterMethods: {
     phoneInt() {
-      return +this.phone.str.replace(/-/g, "")
+      return +this.phone.replace(/-/g, "")
     }
   }
 });
