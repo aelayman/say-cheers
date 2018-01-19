@@ -11,10 +11,9 @@ export const UserHome = (props) => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
       <form className="review-form" onSubmit={props.handleSubmit}>
         <div className="form-group" id="contact-form">
-          <label htmlFor="name">Email of Recipient</label>
+          <label htmlFor="name"></label>
           <input
             className="form-control"
             type="text"
@@ -44,7 +43,7 @@ const mapDispatch = (dispatch, ownProps) => {
     handleSubmit(event) {
       event.preventDefault();
       const cheersData = {
-        receiver: event.target.friendEmail.value
+        receiverEmail: event.target.friendEmail.value
       }
       const history = ownProps.history;
       dispatch(createCheers(cheersData, history));

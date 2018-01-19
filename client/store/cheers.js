@@ -23,16 +23,22 @@ const setReceiver = receiver => ({type: SET_RECEIVER, receiver})
  * THUNK CREATORS
  */
 
-export function createCheers(receiver, history) { // how am I passing up the sender info?
+export function createCheers(receiverEmail, history) {
     return function thunk(dispatch) {
-        return axios.post('/api/cheersRequests', receiver)
-            .then(res => res.data)
-            .then(newRequest => {
-                const action = setReceiver(receiver);
-                dispatch(action);
+        return axios.post('/api/cheersRequests', receiverEmail)
+            .then(res => {
+                const responseData = res.data;
+                if (responseData.isCheers) {
+                    console.log("block created")
+                } else {
+                    console.log("request created", responseData.model)
+                }
                 history.push('/');
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+                alert(error.response.data.error);
+            })
     }
 }
 
