@@ -7,7 +7,9 @@ import { auth } from '../store'
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const { name, displayName, handleSubmit, error } = props
+  const { name, displayName, handleSubmit, error } = props;
+  let phoneField;
+  //TODO only display phone field when on signup page
 
   return (
     <div>
@@ -25,7 +27,7 @@ const AuthForm = (props) => {
           <input name="phone" type="text" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button className="btn btn-primary" type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>

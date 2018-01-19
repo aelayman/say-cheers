@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  background-color: #fdf7ef;
+  flex-direction: column;
 }
 
 a {
@@ -18,4 +20,38 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+nav {
+  background-color: #77A9B2;
+}
+
+.nav-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#user-name {
+  margin-top: 40px;
+  text-align: center;
+}
+
+#num-cheers {
+  text-align: center;
+}
+
+#logout {
+
+}
+
+.cheers-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cheers-btn {
+  display: flex;
+  flex-direction: column;
 }

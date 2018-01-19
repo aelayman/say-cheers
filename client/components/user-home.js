@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createCheers } from '../store/cheers';
+import { createCheers, togglePendingCheers } from '../store/cheers';
 
 /**
  * COMPONENT
@@ -11,7 +11,7 @@ export const UserHome = (props) => {
 
   return (
     <div>
-      <form className="review-form" onSubmit={props.handleSubmit}>
+      <form className="cheers-form" onSubmit={props.handleSubmit}>
         <div className="form-group" id="contact-form">
           <label htmlFor="name"></label>
           <input
@@ -22,7 +22,7 @@ export const UserHome = (props) => {
           />
         </div>
         <div className="form-group">
-          <button type="submit" className="btn btn-primary">Say Cheers!</button>
+          <button type="submit" className="btn btn-primary" id="cheers-btn">Say Cheers!</button>
         </div>
       </form>
     </div>
@@ -43,10 +43,11 @@ const mapDispatch = (dispatch, ownProps) => {
     handleSubmit(event) {
       event.preventDefault();
       const cheersData = {
-        receiverEmail: event.target.friendEmail.value
+        receiverEmail: event.target.friendEmail.value,
       }
       const history = ownProps.history;
       dispatch(createCheers(cheersData, history));
+      dispatch(togglePendingCheers());
     }
   }
 }
@@ -56,6 +57,6 @@ export default connect(mapState, mapDispatch)(UserHome)
 /**
  * PROP TYPES
  */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+// UserHome.propTypes = {
+//   email: PropTypes.string
+// }
