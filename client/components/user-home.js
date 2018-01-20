@@ -66,7 +66,10 @@ const mapState = (state) => {
 const mapDispatch = (dispatch, ownProps) => {
   return {
     loadInitialData() {
-      dispatch(fetchCheersRequest())
+      dispatch(fetchCheersRequest());
+      setInterval(() => {
+        dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
+    }, 5000)
     },
     handleSubmit(event) {
       event.preventDefault();
@@ -77,9 +80,6 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(setPendingCheers());
       dispatch(createCheers(cheersData, history)); //TODO if cheers cannot be created, then do not allows the following dispatch to take place
       //TODOshould display to user how much time is left until they can send another request 
-      setTimeout(() => {
-        dispatch(removePendingCheers())
-      }, 10000) // timeout set to reset in 5 secs TODO allow for reloading the page
     }
   }
 }

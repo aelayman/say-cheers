@@ -3,7 +3,7 @@ const { CheersRequest, User } = require('../db/models')
 module.exports = router
 
 
-const requestLifeTime = 10000; //1000 * 60 * 30;
+const requestLifeTime = 30000; //1000 * 60 * 30;
 
 router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeeper file
   if (!req.user) {
