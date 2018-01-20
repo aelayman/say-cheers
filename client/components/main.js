@@ -11,7 +11,7 @@ import { logout } from '../store'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const { children, handleClick, isLoggedIn, email } = props
+  const { children, handleClick, isLoggedIn, email, userName } = props
 
   return (
     <div>
@@ -24,7 +24,7 @@ const Main = (props) => {
                 <a href="#" id="logout" onClick={handleClick}>Logout</a>
                 <Link to="/" id="edit-profile">Edit Profile</Link>
               </div>
-              <h1 id="user-name">{props.email}</h1>
+              <h1 id="user-name">{userName}</h1>
               <h3 id="num-cheers">Number of Cheers:</h3>
             </div>
             
@@ -50,7 +50,8 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    email: state.user.email
+    email: state.user.email,
+    userName: state.user.name
   }
 }
 

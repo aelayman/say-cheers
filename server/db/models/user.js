@@ -17,6 +17,9 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
+  name: {
+    type: Sequelize.STRING
+  },
   phone: {
     type: Sequelize.STRING,
     allowNull: true,

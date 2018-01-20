@@ -9,13 +9,20 @@ import { auth } from '../store'
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
   let phoneField;
-  //TODO only display phone field when on signup page
-
+  let nameField;
   if (props.name === 'signup') {
-    phoneField = (<div>
-    <label htmlFor="phone"><small>Phone Number</small></label>
-    <input name="phone" type="text" />
-  </div>)
+    phoneField = (
+      <div>
+        <label htmlFor="phone"><small>Phone Number</small></label>
+        <input name="phone" type="text" />
+      </div>
+    )
+    nameField = (
+      <div>
+        <label htmlFor="fullName"><small>Name</small></label>
+        <input name="fullName" type="text" />
+      </div>
+    )
   }
 
   return (
@@ -29,7 +36,7 @@ const AuthForm = (props) => {
           <label htmlFor="password"><small>Password</small></label>
           <input name="password" type="password" />
         </div>
-        {phoneField}
+        {nameField} {phoneField}
         <div>
           <button className="btn btn-primary" type="submit">{displayName}</button>
         </div>
@@ -71,7 +78,8 @@ const mapDispatch = (dispatch) => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       const phone = formName === "signup" ? evt.target.phone.value : null;
-      dispatch(auth(email, password, phone, formName))
+      const name = formName === "signup" ? evt.target.fullName.value : null;
+      dispatch(auth(email, password, phone, name, formName))
     }
   }
 }
