@@ -3,6 +3,8 @@ const { CheersRequest, User } = require('../db/models')
 module.exports = router
 
 
+const requestLifeTime = 10000; //1000 * 60 * 30;
+
 router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeeper file
   if (!req.user) {
     res.status(401).json({ error: "unauthorized" })
@@ -30,8 +32,7 @@ router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeepe
               createNewRequestAndRespond(sender, receiver, res)
             } else {
               let currentTime = new Date();
-              let thirtyMins = 1000 * 60 * 30;
-              if (currentTime - existingRequest.createdAt < thirtyMins) {
+              if (currentTime - existingRequest.createdAt < requestLifeTime) {
                 CheersRequest.update({
                   fulfilledRequest: true
                 }, {
@@ -68,8 +69,7 @@ router.get('/', (req, res, next) => {
       res.json({exists: false, request: null})
     } else {
       let currentTime = new Date();
-      let thirtyMins = 1000 * 60 * 30;
-      if (currentTime - existingRequest.createdAt < thirtyMins) {
+      if (currentTime - existingRequest.createdAt < requestLifeTime) {
         res.json({exists: true, request: existingRequest})
       } else {
         res.json({exists: false, request: null})

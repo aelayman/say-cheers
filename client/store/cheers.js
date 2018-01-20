@@ -21,7 +21,7 @@ const initialReceiverState = {
  * ACTION CREATORS
  */
 const setReceiver = receiver => ({type: SET_RECEIVER, receiver})
-export const setPendingCheers = alertText => ({type: SET_PENDING_CHEERS, alertText}) // alert message to user to wait certain time
+export const setPendingCheers = () => ({type: SET_PENDING_CHEERS}) // alert message to user to wait certain time
 export const removePendingCheers = () => ({type: REMOVE_PENDING_CHEERS})
 
 /**
@@ -29,7 +29,7 @@ export const removePendingCheers = () => ({type: REMOVE_PENDING_CHEERS})
  */
 
 export function createCheers(receiverEmail, history) {
-    // TODO do not allow dispatch of an action if hasPendingCheers is true
+    // TODO do not allow dispatch of an action if hasPendingCheers is true SECURITY on backend
     // first check if the state.hasPendingCheers is false, then allow the axios.post
     return function thunk(dispatch) {
         return axios.post('/api/cheersRequests', receiverEmail)
@@ -44,9 +44,25 @@ export function createCheers(receiverEmail, history) {
             })
             .catch(error => {
                 console.log(error);
-                alert(error.response.data.error);
+                dispatch(removePendingCheers());
+                alert(error.response.data.error); //TODO something other than alert
             })
     }
+}
+
+export function fetchCheersRequest() {
+    return function thunk(dispatch) {
+        return axios.get('/api/cheersRequests')
+            .then(res => res.data)
+            .then(response => {
+                if (response.exists) {
+                    dispatch(setPendingCheers())
+                } else {
+                    dispatch(removePendingCheers())
+                }
+            })
+            .catch(error => console.log(error));
+    };
 }
 
 /**

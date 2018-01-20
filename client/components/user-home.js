@@ -1,45 +1,55 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createCheers, setPendingCheers, removePendingCheers } from '../store/cheers';
+import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest } from '../store/cheers';
 
 /**
  * COMPONENT
  */
-export const UserHome = (props) => {
-  const { email, hasPendingCheers, timeRemaining } = props
-  let formStyle;
-  if (hasPendingCheers) {
-    formStyle = "cheers-faded-form";
-  } else {
-    formStyle = "cheers-form";
+class UserHome extends Component {
+
+  componentDidMount() {
+    this.props.loadInitialData()
+
   }
-  return (
-    <div>
-      <form className={formStyle} onSubmit={props.handleSubmit}>
-        <fieldset disabled={hasPendingCheers}>
-        <div className="form-group" id="contact-form">
-          <label htmlFor="name"></label>
-          <input
-            className="form-control"
-            type="text"
-            name="friendEmail"
-            placeholder="Enter Email Here"
-          />
-        </div>
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary" id="cheers-btn">Say Cheers!</button>
-        </div>
-        </fieldset>
-      </form>
-      {
-        hasPendingCheers &&
+
+  render() {
+    const { email, hasPendingCheers, timeRemaining } = this.props
+    let formStyle;
+    if (hasPendingCheers) {
+      formStyle = "cheers-faded-form";
+    } else {
+      formStyle = "cheers-form";
+    }
+
+
+    return (
+      <div>
+        <form className={formStyle} onSubmit={this.props.handleSubmit}>
+          <fieldset disabled={hasPendingCheers}>
+            <div className="form-group" id="contact-form">
+              <label htmlFor="name"></label>
+              <input
+                className="form-control"
+                type="text"
+                name="friendEmail"
+                placeholder="Enter Email Here"
+              />
+            </div>
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary" id="cheers-btn">Say Cheers!</button>
+            </div>
+          </fieldset>
+        </form>
+        {
+          hasPendingCheers &&
           <div>
-          You must wait {timeRemaining} seconds before your next request
+            You must wait {timeRemaining} seconds before your next request
           </div>
-      }
-    </div>
-  )
+        }
+      </div>
+    )
+  }
 }
 
 /**
@@ -55,17 +65,21 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
+    loadInitialData() {
+      dispatch(fetchCheersRequest())
+    },
     handleSubmit(event) {
       event.preventDefault();
       const cheersData = {
         receiverEmail: event.target.friendEmail.value,
       }
       const history = ownProps.history;
+      dispatch(setPendingCheers());
       dispatch(createCheers(cheersData, history)); //TODO if cheers cannot be created, then do not allows the following dispatch to take place
-      dispatch(setPendingCheers()) //TODOshould display to user how much time is left until they can send another request 
+      //TODOshould display to user how much time is left until they can send another request 
       setTimeout(() => {
         dispatch(removePendingCheers())
-      }, 5000) // timeout set to reset in 5 secs TODO allow for reloading the page
+      }, 10000) // timeout set to reset in 5 secs TODO allow for reloading the page
     }
   }
 }
@@ -83,7 +97,7 @@ export default connect(mapState, mapDispatch)(UserHome)
 //   var s = checkSecond((timeArray[1] - 1));
 //   if(s==59){m=m-1}
 //   //if(m<0){alert('timer completed')}
-  
+
 //   document.getElementById('timer').innerHTML =
 //     m + ":" + s;
 //   setTimeout(startTimer, 1000);
