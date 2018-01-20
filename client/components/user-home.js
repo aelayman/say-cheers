@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest, fetchAllCheers, setRequestIntervalId } from '../store/cheers';
+import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest, fetchAllCheers, setRequestIntervalId, setCheersIntervalId } from '../store/cheers';
 
 /**
  * COMPONENT
@@ -25,7 +25,7 @@ class UserHome extends Component {
     //check which party is the user whose account this is....
     if (lastCheers.time.length > 0) {
       displayLastCheers = (
-        <div>CONGRATULARIONS a CHEERS was created at {lastCheers.time}, with {lastCheers.buddy.name}  </div>
+        <div>Your last CHEERS was at {lastCheers.time}, with {lastCheers.buddy.name}  </div>
       )
     } else {
       displayLastCheers = (<div>You have not created any CHEERS</div>)
@@ -53,7 +53,7 @@ class UserHome extends Component {
         {
           hasPendingCheers &&
           <div>
-            You must wait {timeRemaining} seconds before your next request
+            You must wait {timeRemaining} minutes before your next request
           </div>
         }
         {displayLastCheers}
@@ -80,6 +80,10 @@ const mapDispatch = (dispatch, ownProps) => {
     loadInitialData() {
       dispatch(fetchCheersRequest());
       dispatch(fetchAllCheers());
+      let cheersIntervalId = setInterval(() => {
+        dispatch(fetchAllCheers());
+      }, 5000)
+        dispatch(setCheersIntervalId(cheersIntervalId)); // set interval returns the specific interval id which i can then pass to clear interval
       let requestIntervalId = setInterval(() => {
         dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
       }, 5000)
@@ -97,26 +101,3 @@ const mapDispatch = (dispatch, ownProps) => {
 }
 
 export default connect(mapState, mapDispatch)(UserHome)
-
-// document.getElementById('timer').innerHTML =
-//   '30' + ":" + '00';
-// startTimer();
-
-// function startTimer() {
-//   var presentTime = document.getElementById('timer').innerHTML;
-//   var timeArray = presentTime.split(/[:]+/);
-//   var m = timeArray[0];
-//   var s = checkSecond((timeArray[1] - 1));
-//   if(s==59){m=m-1}
-//   //if(m<0){alert('timer completed')}
-
-//   document.getElementById('timer').innerHTML =
-//     m + ":" + s;
-//   setTimeout(startTimer, 1000);
-// }
-
-// function checkSecond(sec) {
-//   if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
-//   if (sec < 0) {sec = "59"};
-//   return sec;
-// }

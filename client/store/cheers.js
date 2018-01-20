@@ -11,7 +11,8 @@ const SET_REMAINING_TIME = 'SET_REMAINING_TIME'
 const SET_LAST_CHEERS = 'SET_LAST_CHEERS'
 const SET_ALL_CHEERS = 'SET_ALL_CHEERS'
 const SET_REQUEST_INTERVAL_ID = 'SET_REQUEST_INTERVAL_ID'
-const CLEAR_REQUEST_INTERVAL = 'CLEAR_REQUEST_INTERVAL'
+const SET_CHEERS_INTERVAL_ID = 'SET_CHEERS_INTERVAL_ID'
+const CLEAR_REQUEST_INTERVALS = 'CLEAR_REQUEST_INTERVALS'
 
 /**
  * INITIAL STATE
@@ -22,7 +23,8 @@ const initialReceiverState = {
     timeRemaining: 0,
     lastCheers: {time: "", buddy: {}},
     allCheers: [],
-    requestIntervalId: 0
+    requestIntervalId: 0,
+    cheersIntervalId: 0
 }
 
 /**
@@ -35,7 +37,8 @@ export const setRemainingTime = (time) => ({type: SET_REMAINING_TIME, time})
 export const setLastCheers = (time, buddy) => ({type: SET_LAST_CHEERS, time, buddy})
 export const setAllCheers = (allCheers) => ({type: SET_ALL_CHEERS, allCheers})
 export const setRequestIntervalId = (intervalId) => ({type: SET_REQUEST_INTERVAL_ID, intervalId})
-export const clearRequestInterval = () => ({type: CLEAR_REQUEST_INTERVAL})
+export const setCheersIntervalId = (intervalId) => ({type: SET_CHEERS_INTERVAL_ID, intervalId})
+export const clearRequestInterval = () => ({type: CLEAR_REQUEST_INTERVALS})
 
 /**
  * THUNK CREATORS
@@ -119,12 +122,17 @@ export default function (state = initialReceiverState, action) {
 
     case SET_ALL_CHEERS:
         return Object.assign({}, state, {allCheers: action.allCheers}, {lastCheers: action.allCheers[action.allCheers.length - 1]})
+
     case SET_REQUEST_INTERVAL_ID:
         return Object.assign({}, state, {requestIntervalId: action.intervalId})
 
-    case CLEAR_REQUEST_INTERVAL:
+    case SET_CHEERS_INTERVAL_ID:
+        return Object.assign({}, state, {cheersIntervalId: action.intervalId})
+
+    case CLEAR_REQUEST_INTERVALS:
         clearInterval(state.requestIntervalId);
-        return Object.assign({}, state, {requestIntervalId: 0})
+        clearInterval(state.cheersIntervalId);
+        return Object.assign({}, state, {requestIntervalId: 0}, {cheersIntervalId: 0})
 
     default:
       return state
