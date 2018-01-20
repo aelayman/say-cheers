@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest } from '../store/cheers';
+import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest, fetchAllCheers } from '../store/cheers';
 
 /**
  * COMPONENT
@@ -14,12 +14,21 @@ class UserHome extends Component {
   }
 
   render() {
-    const { email, hasPendingCheers, timeRemaining } = this.props
+    const { email, lastCheers, hasPendingCheers, timeRemaining, allCheers } = this.props
     let formStyle;
     if (hasPendingCheers) {
       formStyle = "cheers-faded-form";
     } else {
       formStyle = "cheers-form";
+    }
+    let displayLastCheers;
+    //check which party is the user whose account this is....
+    if (lastCheers.time.length > 0) {
+      displayLastCheers = (
+        <div>CONGRATULARIONS a CHEERS was created at {lastCheers.time}, with {lastCheers.buddy.name}  </div>
+      )
+    } else {
+      displayLastCheers = (<div>You have not created any CHEERS</div>)
     }
 
 
@@ -47,6 +56,7 @@ class UserHome extends Component {
             You must wait {timeRemaining} seconds before your next request
           </div>
         }
+        {displayLastCheers}
       </div>
     )
   }
@@ -59,7 +69,9 @@ const mapState = (state) => {
   return {
     email: state.user.email,
     hasPendingCheers: state.cheers.hasPendingCheers,
-    timeRemaining: state.cheers.timeRemaining
+    timeRemaining: state.cheers.timeRemaining,
+    lastCheers: state.cheers.lastCheers,
+    allCheers: state.cheers.allCheers
   }
 }
 
@@ -67,6 +79,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     loadInitialData() {
       dispatch(fetchCheersRequest());
+      dispatch(fetchAllCheers());
       setInterval(() => {
         dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
     }, 5000)

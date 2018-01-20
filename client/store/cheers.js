@@ -8,6 +8,8 @@ const SET_RECEIVER = 'SET_RECEIVER'
 const SET_PENDING_CHEERS = 'SET_PENDING_CHEERS'
 const REMOVE_PENDING_CHEERS = 'REMOVE_PENDING_CHEERS'
 const SET_REMAINING_TIME = 'SET_REMAINING_TIME'
+const SET_LAST_CHEERS = 'SET_LAST_CHEERS'
+const SET_ALL_CHEERS = 'SET_ALL_CHEERS'
 
 /**
  * INITIAL STATE
@@ -15,7 +17,9 @@ const SET_REMAINING_TIME = 'SET_REMAINING_TIME'
 const initialReceiverState = {
     receiver: {},
     hasPendingCheers: false,
-    timeRemaining: 0
+    timeRemaining: 0,
+    lastCheers: {time: "", buddy: {}},
+    allCheers: []
 }
 
 /**
@@ -25,6 +29,8 @@ const setReceiver = receiver => ({type: SET_RECEIVER, receiver})
 export const setPendingCheers = () => ({type: SET_PENDING_CHEERS}) // alert message to user to wait certain time
 export const removePendingCheers = () => ({type: REMOVE_PENDING_CHEERS})
 export const setRemainingTime = (time) => ({type: SET_REMAINING_TIME, time})
+export const setLastCheers = (time, buddy) => ({type: SET_LAST_CHEERS, time, buddy})
+export const setAllCheers = (allCheers) => ({type: SET_ALL_CHEERS, allCheers})
 
 /**
  * THUNK CREATORS
@@ -39,6 +45,7 @@ export function createCheers(receiverEmail, history) {
                 const responseData = res.data;
                 if (responseData.isCheers) {
                     console.log("this is the blockchain creation response from the other server", responseData.model)
+                    dispatch(setLastCheers(responseData.model.time, responseData.buddy ))
                 } else {
                     console.log("request created", responseData.model)
                     dispatch(setRemainingTime(responseData.timeRemaining));
@@ -69,6 +76,18 @@ export function fetchCheersRequest() {
     };
 }
 
+export function fetchAllCheers() {
+    return function thunk(dispatch) {
+        return axios.get('/api/cheers')
+            .then(res => res.data)
+            .then(response => {
+                dispatch(setAllCheers(response.cheers))
+            })
+            .catch(error => console.log(error))
+    }
+}
+
+
 /**
  * REDUCER
  */
@@ -89,6 +108,12 @@ export default function (state = initialReceiverState, action) {
 
     case SET_REMAINING_TIME:
         return Object.assign({}, state, {timeRemaining: action.time})
+
+    case SET_LAST_CHEERS:
+        return Object.assign({}, state, {lastCheers: {time: action.time, buddy: action.buddy} })
+
+    case SET_ALL_CHEERS:
+        return Object.assign({}, state, {allCheers: action.allCheers}, {lastCheers: action.allCheers[action.allCheers.length - 1]})
 
     default:
       return state

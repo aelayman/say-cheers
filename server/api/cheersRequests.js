@@ -39,15 +39,29 @@ router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeepe
                   fulfilledRequest: true
                 }, {
                     where: { id: existingRequest.id }, // mark existing request as fulfilled
-                    returning: true // needed for affectedRows to be populated
+                    //returning: true // needed for affectedRows to be populated
                   })
-                  .spread((numberOfAffectedRows, affectedRows) => {
-                    return affectedRows[0]
+                  .then(() => {
+                    return CheersRequest.findOne({
+                      where: {
+                        id: existingRequest.id
+                      },
+                      include: [{
+                        model: User,
+                        as: "sender",
+                      }, {
+                        model: User,
+                        as: "receiver"
+                      }]
+                    })
                   })
                   .then(fulfilledRequest => {
-                    createCheersBlock({time: new Date(), party1: fulfilledRequest.senderId, party2: fulfilledRequest.receiverId})
+                    createCheersBlock({time: new Date(), party1: fulfilledRequest.sender, party2: fulfilledRequest.receiver})
                     .then(createdCheers => {
-                      res.status(201).json({isCheers: true, model: createdCheers.data}) // see what createdCheers looks like by checking what the response is from the blockchain post
+                      // need to send who the loggedin user cheersed with
+                      let buddy = createdCheers.data.party1.id === req.user.id ? createdCheers.data.party2 : createdCheers.data.party1
+
+                      res.status(201).json({isCheers: true, model: createdCheers.data, buddy }) // see what createdCheers looks like by checking what the response is from the blockchain post
                     })
                   })
                   .catch(next)
@@ -87,8 +101,6 @@ router.get('/', (req, res, next) => {
     }
   })
 })
-
-
 
 
 // aux functions
