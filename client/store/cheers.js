@@ -7,6 +7,7 @@ import history from '../history'
 const SET_RECEIVER = 'SET_RECEIVER'
 const SET_PENDING_CHEERS = 'SET_PENDING_CHEERS'
 const REMOVE_PENDING_CHEERS = 'REMOVE_PENDING_CHEERS'
+const SET_REMAINING_TIME = 'SET_REMAINING_TIME'
 
 /**
  * INITIAL STATE
@@ -23,6 +24,7 @@ const initialReceiverState = {
 const setReceiver = receiver => ({type: SET_RECEIVER, receiver})
 export const setPendingCheers = () => ({type: SET_PENDING_CHEERS}) // alert message to user to wait certain time
 export const removePendingCheers = () => ({type: REMOVE_PENDING_CHEERS})
+export const setRemainingTime = (time) => ({type: SET_REMAINING_TIME, time})
 
 /**
  * THUNK CREATORS
@@ -39,12 +41,13 @@ export function createCheers(receiverEmail, history) {
                     console.log("block created")
                 } else {
                     console.log("request created", responseData.model)
+                    dispatch(setRemainingTime(responseData.timeRemaining));
+                    dispatch(setPendingCheers());
                 }
                 history.push('/');
             })
             .catch(error => {
                 console.log(error);
-                dispatch(removePendingCheers());
                 alert(error.response.data.error); //TODO something other than alert
             })
     }
@@ -60,6 +63,7 @@ export function fetchCheersRequest() {
                 } else {
                     dispatch(removePendingCheers())
                 }
+                dispatch(setRemainingTime(response.timeRemaining))
             })
             .catch(error => console.log(error));
     };
@@ -82,6 +86,10 @@ export default function (state = initialReceiverState, action) {
         let pendingCheersStatus = false;
         return Object.assign({}, state, {hasPendingCheers: pendingCheersStatus})
     }
+
+    case SET_REMAINING_TIME:
+        return Object.assign({}, state, {timeRemaining: action.time})
+
     default:
       return state
   }

@@ -70,9 +70,11 @@ router.get('/', (req, res, next) => {
     } else {
       let currentTime = new Date();
       if (currentTime - existingRequest.createdAt < requestLifeTime) {
-        res.json({exists: true, request: existingRequest})
+        let age = currentTime - existingRequest.createdAt;
+        let remainingTime = Math.ceil((requestLifeTime - age) / 1000);
+        res.json({exists: true, request: existingRequest, timeRemaining: remainingTime})
       } else {
-        res.json({exists: false, request: null})
+        res.json({exists: false, request: null, timeRemaining: 0})
       }
     }
   })
@@ -96,7 +98,7 @@ const createNewRequestAndRespond = (sender, receiver, res) => {
     receiverId: receiver.id
   })
     .then(newRequest => { 
-      return res.status(201).json({isCheers: false, model: newRequest}) // modle is the item in the table
+      return res.status(201).json({isCheers: false, model: newRequest, timeRemaining: requestLifeTime / 1000}) // modle is the item in the table, lifetime is divided to make it into seconds
     })
 }
 
