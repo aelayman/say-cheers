@@ -24,7 +24,10 @@ const Main = (props) => {
                 <a href="#" id="logout" onClick={handleClick}>Logout</a>
                 <Link to="/" id="edit-profile">Edit Profile</Link>
               </div>
+              <h1 id="user-name">{props.email}</h1>
+              <h3 id="num-cheers">Number of Cheers:</h3>
             </div>
+            
             : <div>
               {/* The navbar will show these links before you log in */}
               <div className="nav-control">
@@ -34,8 +37,6 @@ const Main = (props) => {
 
             </div>
         }
-        <h1 id="user-name">{props.email}</h1>
-        <h3 id="num-cheers">Number of Cheers:</h3>
       </nav>
       <hr />
       {children}
@@ -68,8 +69,8 @@ export default withRouter(connect(mapState, mapDispatch)(Main))
 /**
  * PROP TYPES
  */
-Main.propTypes = {
-  children: PropTypes.object,
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+// Main.propTypes = {
+//   children: PropTypes.object,
+//   handleClick: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired
+// }

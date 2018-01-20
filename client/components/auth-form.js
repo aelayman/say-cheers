@@ -11,6 +11,13 @@ const AuthForm = (props) => {
   let phoneField;
   //TODO only display phone field when on signup page
 
+  if (props.name === 'signup') {
+    phoneField = (<div>
+    <label htmlFor="phone"><small>Phone Number</small></label>
+    <input name="phone" type="text" />
+  </div>)
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -22,10 +29,7 @@ const AuthForm = (props) => {
           <label htmlFor="password"><small>Password</small></label>
           <input name="password" type="password" />
         </div>
-        <div>
-          <label htmlFor="phone"><small>Phone Number</small></label>
-          <input name="phone" type="text" />
-        </div>
+        {phoneField}
         <div>
           <button className="btn btn-primary" type="submit">{displayName}</button>
         </div>
@@ -66,7 +70,7 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const phone = evt.target.phone.value
+      const phone = formName === "signup" ? evt.target.phone.value : null;
       dispatch(auth(email, password, phone, formName))
     }
   }

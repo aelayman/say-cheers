@@ -45,13 +45,24 @@ nav {
 
 }
 
+fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .cheers-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.cheers-faded-form {
+  opacity: 0.5;
+}
+
 #cheers-btn {
   display: flex;
   flex-direction: column;
+  margin-left: 34px;
 }
