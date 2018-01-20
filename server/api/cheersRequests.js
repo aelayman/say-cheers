@@ -53,6 +53,34 @@ router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeepe
     .catch(next)
 })
 
+router.get('/', (req, res, next) => {
+  CheersRequest.findAll({
+    limit: 1,
+    where: {
+      senderId: req.user.id,
+      fulfilledRequest: false
+    },
+    order: [['createdAt', 'DESC']]
+  })
+  .then(existingRequests => {
+    const existingRequest = existingRequests[0];
+    if (!existingRequest) {
+      res.json({exists: false, request: null})
+    } else {
+      let currentTime = new Date();
+      let thirtyMins = 1000 * 60 * 30;
+      if (currentTime - existingRequest.createdAt < thirtyMins) {
+        res.json({exists: true, request: existingRequest})
+      } else {
+        res.json({exists: false, request: null})
+      }
+    }
+  })
+})
+
+
+
+
 // aux functions
 const userFromEmail = userEmail => {
   return User.findOne({
@@ -68,7 +96,7 @@ const createNewRequestAndRespond = (sender, receiver, res) => {
     receiverId: receiver.id
   })
     .then(newRequest => { 
-      return res.status(201).json({isCheers: false, model: newRequest})
+      return res.status(201).json({isCheers: false, model: newRequest}) // modle is the item in the table
     })
 }
 
