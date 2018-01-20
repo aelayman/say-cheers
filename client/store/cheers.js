@@ -38,7 +38,7 @@ export function createCheers(receiverEmail, history) {
             .then(res => {
                 const responseData = res.data;
                 if (responseData.isCheers) {
-                    console.log("block created")
+                    console.log("this is the blockchain creation response from the other server", responseData.model)
                 } else {
                     console.log("request created", responseData.model)
                     dispatch(setRemainingTime(responseData.timeRemaining));

@@ -2,6 +2,8 @@ const router = require('express').Router()
 const { CheersRequest, User } = require('../db/models')
 module.exports = router
 
+const axios = require('axios');
+
 
 const requestLifeTime = 30000; //1000 * 60 * 30;
 
@@ -36,11 +38,17 @@ router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeepe
                 CheersRequest.update({
                   fulfilledRequest: true
                 }, {
-                    where: { id: existingRequest.id } // mark existing request as fulfilled
+                    where: { id: existingRequest.id }, // mark existing request as fulfilled
+                    returning: true // needed for affectedRows to be populated
+                  })
+                  .spread((numberOfAffectedRows, affectedRows) => {
+                    return affectedRows[0]
                   })
                   .then(fulfilledRequest => {
-                    // TODO create new block in blockchain
-                    res.status(201).json({ isCheers: true, model: {} })
+                    createCheersBlock({time: new Date(), party1: fulfilledRequest.senderId, party2: fulfilledRequest.receiverId})
+                    .then(createdCheers => {
+                      res.status(201).json({isCheers: true, model: createdCheers.data}) // see what createdCheers looks like by checking what the response is from the blockchain post
+                    })
                   })
                   .catch(next)
               } else {
@@ -100,6 +108,18 @@ const createNewRequestAndRespond = (sender, receiver, res) => {
     .then(newRequest => { 
       return res.status(201).json({isCheers: false, model: newRequest, timeRemaining: requestLifeTime / 1000}) // modle is the item in the table, lifetime is divided to make it into seconds
     })
+}
+
+const createCheersBlock = (cheers) => {
+  //method is a post
+  // maybe need header?
+  // url: https://say-cheers-blockchain.herokuapp.com/mineBlock
+
+  //body: {"data" : cheers}
+  return axios.post('http://localhost:3001/mineBlock', {data: cheers})
+    .then(res => res.data)
+    .catch(error => console.log(error));
+
 }
 
 // send to blockchain server

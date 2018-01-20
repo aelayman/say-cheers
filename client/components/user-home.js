@@ -77,8 +77,7 @@ const mapDispatch = (dispatch, ownProps) => {
         receiverEmail: event.target.friendEmail.value,
       }
       const history = ownProps.history;
-      dispatch(createCheers(cheersData, history)); //TODO if cheers cannot be created, then do not allows the following dispatch to take place
-      //TODOshould display to user how much time is left until they can send another request 
+      dispatch(createCheers(cheersData, history));
     }
   }
 }
