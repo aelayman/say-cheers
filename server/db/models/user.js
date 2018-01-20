@@ -19,7 +19,8 @@ const User = db.define('user', {
   },
   phone: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: true,
+    defaultValue: ""
   }
 }, {
   getterMethods: {
