@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest, fetchAllCheers } from '../store/cheers';
+import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest, fetchAllCheers, setRequestIntervalId } from '../store/cheers';
 
 /**
  * COMPONENT
@@ -80,9 +80,10 @@ const mapDispatch = (dispatch, ownProps) => {
     loadInitialData() {
       dispatch(fetchCheersRequest());
       dispatch(fetchAllCheers());
-      setInterval(() => {
+      let requestIntervalId = setInterval(() => {
         dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
-    }, 5000)
+      }, 5000)
+      dispatch(setRequestIntervalId(requestIntervalId))
     },
     handleSubmit(event) {
       event.preventDefault();

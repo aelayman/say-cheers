@@ -10,6 +10,8 @@ const REMOVE_PENDING_CHEERS = 'REMOVE_PENDING_CHEERS'
 const SET_REMAINING_TIME = 'SET_REMAINING_TIME'
 const SET_LAST_CHEERS = 'SET_LAST_CHEERS'
 const SET_ALL_CHEERS = 'SET_ALL_CHEERS'
+const SET_REQUEST_INTERVAL_ID = 'SET_REQUEST_INTERVAL_ID'
+const CLEAR_REQUEST_INTERVAL = 'CLEAR_REQUEST_INTERVAL'
 
 /**
  * INITIAL STATE
@@ -19,7 +21,8 @@ const initialReceiverState = {
     hasPendingCheers: false,
     timeRemaining: 0,
     lastCheers: {time: "", buddy: {}},
-    allCheers: []
+    allCheers: [],
+    requestIntervalId: 0
 }
 
 /**
@@ -31,6 +34,8 @@ export const removePendingCheers = () => ({type: REMOVE_PENDING_CHEERS})
 export const setRemainingTime = (time) => ({type: SET_REMAINING_TIME, time})
 export const setLastCheers = (time, buddy) => ({type: SET_LAST_CHEERS, time, buddy})
 export const setAllCheers = (allCheers) => ({type: SET_ALL_CHEERS, allCheers})
+export const setRequestIntervalId = (intervalId) => ({type: SET_REQUEST_INTERVAL_ID, intervalId})
+export const clearRequestInterval = () => ({type: CLEAR_REQUEST_INTERVAL})
 
 /**
  * THUNK CREATORS
@@ -114,6 +119,12 @@ export default function (state = initialReceiverState, action) {
 
     case SET_ALL_CHEERS:
         return Object.assign({}, state, {allCheers: action.allCheers}, {lastCheers: action.allCheers[action.allCheers.length - 1]})
+    case SET_REQUEST_INTERVAL_ID:
+        return Object.assign({}, state, {requestIntervalId: action.intervalId})
+
+    case CLEAR_REQUEST_INTERVAL:
+        clearInterval(state.requestIntervalId);
+        return Object.assign({}, state, {requestIntervalId: 0})
 
     default:
       return state

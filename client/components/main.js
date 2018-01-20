@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout } from '../store'
+import { clearRequestInterval } from '../store/cheers';
 
 /**
  * COMPONENT
@@ -52,14 +53,16 @@ const mapState = (state) => {
     isLoggedIn: !!state.user.id,
     email: state.user.email,
     userName: state.user.name,
-    numCheers: state.cheers.allCheers.length
+    numCheers: state.cheers.allCheers.length,
+
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(clearRequestInterval());
     }
   }
 }
