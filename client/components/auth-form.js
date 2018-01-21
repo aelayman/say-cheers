@@ -7,29 +7,42 @@ import { auth } from '../store'
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const { name, displayName, handleSubmit, error } = props
+  const { name, displayName, handleSubmit, error } = props;
+  let phoneField;
+  let nameField;
+  if (props.name === 'signup') {
+    phoneField = (
+      <div>
+        <label htmlFor="phone"><small>Phone Number</small></label>
+        <input className="login-signup-input" name="phone" type="text" />
+      </div>
+    )
+    nameField = (
+      <div>
+        <label htmlFor="fullName"><small>Name</small></label>
+        <input  className="login-signup-input" name="fullName" type="text" />
+      </div>
+    )
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form className="login-signup" onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email"><small>Email</small></label>
-          <input name="email" type="text" />
+          <input className="login-signup-input" name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password"><small>Password</small></label>
-          <input name="password" type="password" />
+          <input className="login-signup-input" name="password" type="password" />
         </div>
+        {nameField} {phoneField}
         <div>
-          <label htmlFor="phone"><small>Phone Number</small></label>
-          <input name="phone" type="text" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
+          <button id="login-signup-btn" className="btn btn-primary" type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a id="google-text" href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }
@@ -64,8 +77,9 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const phone = evt.target.phone.value
-      dispatch(auth(email, password, phone, formName))
+      const phone = formName === "signup" ? evt.target.phone.value : null;
+      const name = formName === "signup" ? evt.target.fullName.value : null;
+      dispatch(auth(email, password, phone, name, formName))
     }
   }
 }

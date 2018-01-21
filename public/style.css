@@ -1,9 +1,32 @@
 body {
   font-family: sans-serif;
+  background-color: #FFD171;
+  flex-direction: column;
+  font-family: 'Muli', sans-serif;
 }
 
 a {
   text-decoration: none;
+  color: #FFFFEB;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #FFFFEB
+}
+
+a:active {
+  /* color: #70a1e5; */
+  text-decoration: none;
+}
+
+
+h1 {
+  text-align: center;
 }
 
 label {
@@ -15,7 +38,216 @@ nav a {
   margin: 1em;
 }
 
+hr {
+  width: 75%;
+}
+
+#google-text {
+  margin-left: 20px;
+}
+
+#number-cheers {
+  display: inline;
+  text-decoration: underline;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+nav {
+  background-color: #E57A70;
+  border-radius: 5px;
+  padding-bottom: 10px;
+}
+
+.nav-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#user-name {
+  margin-top: 40px;
+  text-align: center;
+}
+
+h3 {
+  color: #FFFFEB;
+}
+
+#login-signup-btn {
+  background-color: #E57A70;
+  border: none;
+}
+
+#num-cheers {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.login-signup {
+  display: flex;
+  flex-direction: column;
+  width: 156px;
+  
+}
+
+.login-signup-input {
+  border-radius: 5px;
+  background-color: #FFFFEB;
+}
+
+.cheers-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.form-control {
+  width: 156px;
+  text-align: center;
+  background: #FFFFEB
+
+}
+
+#friend-email {
+  width: 200px
+}
+
+
+.cheers-faded-form {
+  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+}
+
+#wait-message {
+  padding: 30px;
+  background-color: white;
+  color: #F4AC6C;
+  text-align: center;
+}
+
+.last-cheers {
+  margin: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #F4AC6C;
+  margin-top: 36px;
+}
+
+.highlight {
+  background-color: #E57A70;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #F4AC6C;
+}
+
+
+
+#cheers-btn {
+  /* display: flex;
+  flex-direction: column;
+  margin-left: 34px; */
+  /* border: 0; 
+  background: transparent */
+  display: inline-block;
+  border: none;
+  color: #705D07;
+  border-radius: 3px 3px 3px 3px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 3px 3px 3px 3px;
+  font-family: Verdana;
+  width: 150px;
+  box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D,0 2px 4px 0 #D4D4D4;
+  -moz-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D,0 2px 4px 0 #D4D4D4;
+  -webkit-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D,0 2px 4px 0 #D4D4D4;
+  text-shadow: 0 1px 0 #FFFFFF;
+  background-color: #FFFFEB;
+ }
+
+ /* #cheers-btn:hover, #cheers-btn:active{
+  border: none;
+  color: #705D07;
+  box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D;
+  -moz-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D;
+  -webkit-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D;
+  background-color: #F4AC6C;
+ } */
+
+ #cheers-btn div {
+  display: block;
+  margin: 0;
+ }
+
+ #cheers-btn #cheers-btn-text {
+   color: #F4AC6C;
+   margin-top: 10px;
+ }
+
+#btn-primary {
+  display: flex;
+  flex-direction: column;
+  margin-left: 34px;
+}
+
+#cheers-image {
+  height: 60px;
+  border-radius: 5px;
+  background: #FFFFEB;
+  margin-top: 5px;
+}
+
+#view-cheers {
+  display: flex;
+  background-color: #E57A70;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+
+
+}
+
+.cheers-instance {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.cheers-info {
+  background-color: #F4AC6C;
+  border-radius: 5px;
+  padding: 20px;
+  color: #FFFFEB;
+  margin-right: 20px;
+  width: 100%;
+  font-size: 4vw;
+}
+
+.cheers-image-bullet {
+  display: flex;
+  width: 18%;
+  height: 18%;
+  background-color: #FFFFEB;
+  border-radius: 5px;
+  margin: 20px;
 }
