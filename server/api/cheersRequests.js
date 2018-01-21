@@ -128,7 +128,7 @@ const createCheersBlock = (cheers) => {
   // url: https://say-cheers-blockchain.herokuapp.com/mineBlock
 
   //body: {"data" : cheers}
-  return axios.post('http://localhost:3001/mineBlock', {data: cheers})
+  return axios.post('https://say-cheers-blockchain.herokuapp.com/mineBlock', {data: cheers})
     .then(res => res.data)
     .catch(error => console.log(error));
 

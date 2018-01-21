@@ -7,7 +7,7 @@ const axios = require('axios');
 
 router.get('/', (req, res, next) => {
     const user = req.user;
-    axios.get('http://localhost:3001/blocks')
+    axios.get('https://say-cheers-blockchain.herokuapp.com/blocks')
     .then(cheers => {
       res.json({cheers: cheers.data.filter(block => {
           return block.index !== 0 && (block.data.party1.id === req.user.id || block.data.party2.id === req.user.id)

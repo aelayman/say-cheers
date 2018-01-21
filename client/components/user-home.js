@@ -12,10 +12,10 @@ import { Link } from 'react-router-dom';
  */
 class UserHome extends Component {
 
-  componentDidMount() {
-    this.props.loadInitialData()
+  // componentDidMount() {
+  //   this.props.loadInitialData()
 
-  }
+  // }
 
   render() {
     const { email, lastCheers, hasPendingCheers, timeRemaining, allCheers } = this.props
@@ -102,18 +102,18 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    loadInitialData() {
-      dispatch(fetchCheersRequest());
-      dispatch(fetchAllCheers());
-      let cheersIntervalId = setInterval(() => {
-        dispatch(fetchAllCheers());
-      }, 5000)
-      dispatch(setCheersIntervalId(cheersIntervalId)); // set interval returns the specific interval id which i can then pass to clear interval
-      let requestIntervalId = setInterval(() => {
-        dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
-      }, 5000)
-      dispatch(setRequestIntervalId(requestIntervalId))
-    },
+    // loadInitialData() {
+    //   dispatch(fetchCheersRequest());
+    //   dispatch(fetchAllCheers());
+    //   let cheersIntervalId = setInterval(() => {
+    //     dispatch(fetchAllCheers());
+    //   }, 5000)
+    //   dispatch(setCheersIntervalId(cheersIntervalId)); // set interval returns the specific interval id which i can then pass to clear interval
+    //   let requestIntervalId = setInterval(() => {
+    //     dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
+    //   }, 5000)
+    //   dispatch(setRequestIntervalId(requestIntervalId))
+    // },
     handleSubmit(event) {
       event.preventDefault();
       const cheersData = {
