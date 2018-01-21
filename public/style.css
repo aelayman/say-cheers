@@ -16,6 +16,7 @@ a:link {
 
 a:visited {
   text-decoration: none;
+  color: #FFFFEB
 }
 
 a:active {
@@ -47,7 +48,6 @@ hr {
 
 #number-cheers {
   display: inline;
-  margin-right: 10px;
   text-decoration: underline;
 }
 
@@ -84,8 +84,6 @@ h3 {
 
 #num-cheers {
   text-align: center;
-  display: flex;
-  margin-left: 30%;
   margin-bottom: 10px;
 }
 
@@ -113,9 +111,7 @@ fieldset {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 156px;
   text-align: center;
-  margin-left: 28%;
 }
 
 .form-control {
@@ -125,27 +121,85 @@ fieldset {
 
 }
 
+#friend-email {
+  width: 200px
+}
+
 
 .cheers-faded-form {
   opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
 }
 
-#last-cheers {
+#wait-message {
+  padding: 30px;
+  background-color: white;
+  color: #F4AC6C;
+  text-align: center;
+}
+
+.last-cheers {
   margin: 20px;
   text-align: center;
   font-weight: bold;
   color: #F4AC6C;
-  margin: 30px 36px 20px 36px;
+  margin-top: 36px;
 }
+
+.highlight {
+  background-color: #E57A70;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #F4AC6C;
+}
+
+
 
 #cheers-btn {
   /* display: flex;
   flex-direction: column;
   margin-left: 34px; */
-  border: 0; 
-  background: transparent
+  /* border: 0; 
+  background: transparent */
+  display: inline-block;
+  border: none;
+  color: #705D07;
+  border-radius: 3px 3px 3px 3px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 3px 3px 3px 3px;
+  font-family: Verdana;
+  width: 150px;
+  box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D,0 2px 4px 0 #D4D4D4;
+  -moz-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D,0 2px 4px 0 #D4D4D4;
+  -webkit-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D,0 2px 4px 0 #D4D4D4;
+  text-shadow: 0 1px 0 #FFFFFF;
+  background-color: #FFFFEB;
+ }
 
-}
+ /* #cheers-btn:hover, #cheers-btn:active{
+  border: none;
+  color: #705D07;
+  box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D;
+  -moz-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D;
+  -webkit-box-shadow: inset 0 1px 0 0 #FFF6CE,inset 0 -1px 0 0 #E3C852,inset 0 0 0 1px #FCE88D;
+  background-color: #F4AC6C;
+ } */
+
+ #cheers-btn div {
+  display: block;
+  margin: 0;
+ }
+
+ #cheers-btn #cheers-btn-text {
+   color: #F4AC6C;
+   margin-top: 10px;
+ }
 
 #btn-primary {
   display: flex;
@@ -154,17 +208,22 @@ fieldset {
 }
 
 #cheers-image {
-  width: 65%;
-  border: solid white;
+  height: 60px;
   border-radius: 5px;
-  background: #FFFFEB
+  background: #FFFFEB;
+  margin-top: 5px;
 }
 
 #view-cheers {
   display: flex;
   background-color: #E57A70;
-  margin-left: 33%;
   margin-top: 35px;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+
+
 }
 
 .cheers-instance {
@@ -179,6 +238,9 @@ fieldset {
   border-radius: 5px;
   padding: 20px;
   color: #FFFFEB;
+  margin-right: 20px;
+  width: 100%;
+  font-size: 4vw;
 }
 
 .cheers-image-bullet {

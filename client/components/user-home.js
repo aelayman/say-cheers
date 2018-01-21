@@ -26,17 +26,26 @@ class UserHome extends Component {
       formStyle = "cheers-form";
     }
     let displayLastCheers;
+    let isTextHighlighted;
+    let currentTime = new Date();
     //check which party is the user whose account this is....
-    if (lastCheers.time.length > 0) {
+    if (lastCheers !== undefined) {
+      if (currentTime - new Date(lastCheers.time) < 30000) {
+        isTextHighlighted = "highlight"
+      } else {
+        isTextHighlighted = "last-cheers"
+      }
       displayLastCheers = (
-        <div id="last-cheers">Your last CHEERS was with {lastCheers.buddy.name} on {dateFormat(lastCheers.time, "dddd, mmmm dS")}, at {dateFormat(lastCheers.time, "h:MM TT")}
+        <div>
+          <div className={isTextHighlighted}>Your last CHEERS was with {lastCheers.buddy.name} on {dateFormat(lastCheers.time, "dddd, mmmm dS")}, at {dateFormat(lastCheers.time, "h:MM TT")}
+          </div>
           <button type="button" className="btn" id="view-cheers">
             <Link to={`/cheers`}>View Cheers</Link>
           </button>
         </div>
       )
     } else {
-      displayLastCheers = (<div>You have not created any CHEERS</div>)
+      displayLastCheers = (<div className="last-cheers">You haven't CHEERS'd with anyone<br /> Say CHEERS to a friend above</div>)
     }
 
     return (
@@ -46,22 +55,28 @@ class UserHome extends Component {
             <div className="form-group" id="contact-form">
               <label htmlFor="name"></label>
               <input
+                id="friend-email"
                 className="form-control"
                 type="text"
                 name="friendEmail"
-                placeholder="Say Cheers!"
+                placeholder="Enter a friend's email"
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-primary" id="cheers-btn">
-                <img id="cheers-image" src="https://i.imgur.com/pAxH5fc.png" />
+              <button type="submit" className="btn" id="cheers-btn">
+                <div>
+                  <div>
+                    <img id="cheers-image" src="https://i.imgur.com/pAxH5fc.png" />
+                  </div>
+                  <div id="cheers-btn-text">Say Cheers!</div>
+                </div>
               </button>
             </div>
           </fieldset>
         </form>
         {
           hasPendingCheers &&
-          <div>
+          <div id="wait-message">
             You must wait {timeRemaining} minutes before your next request
           </div>
         }
