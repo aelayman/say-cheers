@@ -14,7 +14,7 @@ import { clearRequestInterval, fetchCheersRequest, fetchAllCheers, setRequestInt
 class Main extends Component {
 
   componentDidMount() {
-    this.props.loadInitialData()
+    this.props.loadInitialData(this.props.isLoggedIn)
   }
 
   render() {
@@ -77,7 +77,7 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(logout())
       dispatch(clearRequestInterval());
     },
-    loadInitialData() {
+    loadInitialData(isLoggedIn) {
       dispatch(fetchCheersRequest());
       dispatch(fetchAllCheers());
       let cheersIntervalId = setInterval(() => {
@@ -88,8 +88,9 @@ const mapDispatch = (dispatch, ownProps) => {
         dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
       }, 5000)
       dispatch(setRequestIntervalId(requestIntervalId))
-    },
+    }
   }
+
 }
 
 // The `withRouter` wrapper makes sure that updates are not blocked

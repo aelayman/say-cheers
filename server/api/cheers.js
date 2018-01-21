@@ -6,6 +6,10 @@ const axios = require('axios');
 
 
 router.get('/', (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({ error: "unauthorized" })
+    return;
+  }
     const user = req.user;
     axios.get('https://say-cheers-blockchain.herokuapp.com/blocks')
     .then(cheers => {

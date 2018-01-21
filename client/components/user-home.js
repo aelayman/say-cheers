@@ -77,7 +77,7 @@ class UserHome extends Component {
         {
           hasPendingCheers &&
           <div id="wait-message">
-            You must wait {timeRemaining} minutes before your next request
+            Your CHEERS was sent! Now wait {timeRemaining} minutes before your next request
           </div>
         }
         <hr />

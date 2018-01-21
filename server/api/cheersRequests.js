@@ -77,6 +77,10 @@ router.post('/', (req, res, next) => { // TODO add isLoggedIn logic in gatekeepe
 })
 
 router.get('/', (req, res, next) => {
+  if (!req.user) {
+    res.status(401).send('');
+    return;
+  }
   CheersRequest.findAll({
     limit: 1,
     where: {
