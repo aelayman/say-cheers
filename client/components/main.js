@@ -25,10 +25,16 @@ const Main = (props) => {
                 <a href="#" id="logout" onClick={handleClick}>Logout</a>
                 <Link to="/" id="edit-profile">Edit Profile</Link>
               </div>
-              <h1 id="user-name">{userName}</h1>
-              <h3 id="num-cheers">Number of Cheers: {numCheers}</h3>
+              <h1>
+                <Link to="/" id="username">{userName}</Link>
+              </h1>
+              <h3 id="num-cheers">
+                <div>
+                  <Link id="number-cheers" to={`/cheers`}>{numCheers} Cheers</Link>
+                </div>
+              </h3>
             </div>
-            
+
             : <div>
               {/* The navbar will show these links before you log in */}
               <div className="nav-control">
@@ -39,7 +45,6 @@ const Main = (props) => {
             </div>
         }
       </nav>
-      <hr />
       {children}
     </div>
   )

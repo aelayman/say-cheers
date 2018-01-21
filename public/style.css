@@ -1,11 +1,31 @@
 body {
   font-family: sans-serif;
-  background-color: #fdf7ef;
+  background-color: #FFD171;
   flex-direction: column;
+  font-family: 'Muli', sans-serif;
 }
 
 a {
   text-decoration: none;
+  color: #FFFFEB;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:active {
+  /* color: #70a1e5; */
+  text-decoration: none;
+}
+
+
+h1 {
+  text-align: center;
 }
 
 label {
@@ -17,13 +37,29 @@ nav a {
   margin: 1em;
 }
 
+hr {
+  width: 75%;
+}
+
+#google-text {
+  margin-left: 20px;
+}
+
+#number-cheers {
+  display: inline;
+  margin-right: 10px;
+  text-decoration: underline;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
 }
 
 nav {
-  background-color: #77A9B2;
+  background-color: #E57A70;
+  border-radius: 5px;
+  padding-bottom: 10px;
 }
 
 .nav-control {
@@ -37,32 +73,119 @@ nav {
   text-align: center;
 }
 
+h3 {
+  color: #FFFFEB;
+}
+
+#login-signup-btn {
+  background-color: #E57A70;
+  border: none;
+}
+
 #num-cheers {
   text-align: center;
+  display: flex;
+  margin-left: 30%;
+  margin-bottom: 10px;
 }
 
-#logout {
-
-}
 
 fieldset {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
+}
+
+.login-signup {
+  display: flex;
+  flex-direction: column;
+  width: 156px;
+  
+}
+
+.login-signup-input {
+  border-radius: 5px;
+  background-color: #FFFFEB;
 }
 
 .cheers-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 156px;
+  text-align: center;
+  margin-left: 28%;
 }
+
+.form-control {
+  width: 156px;
+  text-align: center;
+  background: #FFFFEB
+
+}
+
 
 .cheers-faded-form {
   opacity: 0.5;
 }
 
+#last-cheers {
+  margin: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #F4AC6C;
+  margin: 30px 36px 20px 36px;
+}
+
 #cheers-btn {
+  /* display: flex;
+  flex-direction: column;
+  margin-left: 34px; */
+  border: 0; 
+  background: transparent
+
+}
+
+#btn-primary {
   display: flex;
   flex-direction: column;
   margin-left: 34px;
+}
+
+#cheers-image {
+  width: 65%;
+  border: solid white;
+  border-radius: 5px;
+  background: #FFFFEB
+}
+
+#view-cheers {
+  display: flex;
+  background-color: #E57A70;
+  margin-left: 33%;
+  margin-top: 35px;
+}
+
+.cheers-instance {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.cheers-info {
+  background-color: #F4AC6C;
+  border-radius: 5px;
+  padding: 20px;
+  color: #FFFFEB;
+}
+
+.cheers-image-bullet {
+  display: flex;
+  width: 18%;
+  height: 18%;
+  background-color: #FFFFEB;
+  border-radius: 5px;
+  margin: 20px;
 }

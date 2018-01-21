@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createCheers, setPendingCheers, removePendingCheers, fetchCheersRequest, fetchAllCheers, setRequestIntervalId, setCheersIntervalId } from '../store/cheers';
+import AllCheers from './all-cheers'
+import dateFormat from 'dateformat';
+import { Link } from 'react-router-dom';
+
 
 /**
  * COMPONENT
@@ -25,12 +29,15 @@ class UserHome extends Component {
     //check which party is the user whose account this is....
     if (lastCheers.time.length > 0) {
       displayLastCheers = (
-        <div>Your last CHEERS was at {lastCheers.time}, with {lastCheers.buddy.name}  </div>
+        <div id="last-cheers">Your last CHEERS was with {lastCheers.buddy.name} on {dateFormat(lastCheers.time, "dddd, mmmm dS")}, at {dateFormat(lastCheers.time, "h:MM TT")}
+          <button type="button" className="btn" id="view-cheers">
+            <Link to={`/cheers`}>View Cheers</Link>
+          </button>
+        </div>
       )
     } else {
       displayLastCheers = (<div>You have not created any CHEERS</div>)
     }
-
 
     return (
       <div>
@@ -42,11 +49,13 @@ class UserHome extends Component {
                 className="form-control"
                 type="text"
                 name="friendEmail"
-                placeholder="Enter Email Here"
+                placeholder="Say Cheers!"
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-primary" id="cheers-btn">Say Cheers!</button>
+              <button type="submit" className="btn btn-primary" id="cheers-btn">
+                <img id="cheers-image" src="https://i.imgur.com/pAxH5fc.png" />
+              </button>
             </div>
           </fieldset>
         </form>
@@ -56,6 +65,7 @@ class UserHome extends Component {
             You must wait {timeRemaining} minutes before your next request
           </div>
         }
+        <hr />
         {displayLastCheers}
       </div>
     )
@@ -83,7 +93,7 @@ const mapDispatch = (dispatch, ownProps) => {
       let cheersIntervalId = setInterval(() => {
         dispatch(fetchAllCheers());
       }, 5000)
-        dispatch(setCheersIntervalId(cheersIntervalId)); // set interval returns the specific interval id which i can then pass to clear interval
+      dispatch(setCheersIntervalId(cheersIntervalId)); // set interval returns the specific interval id which i can then pass to clear interval
       let requestIntervalId = setInterval(() => {
         dispatch(fetchCheersRequest()); // fetchingCheersRequest to see if existing cheers exist every 5 seconds
       }, 5000)
